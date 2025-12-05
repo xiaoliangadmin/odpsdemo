@@ -1,0 +1,64 @@
+{
+    "type": "job",
+    "version": "2.0",
+    "steps": [
+        {
+            "stepType": "${fromStepType}",
+            "parameter": {
+                "fieldDelimiterOrigin": "${fromFieldDelimiter}",
+                "lineDelimiterOrigin": "${fromLineDelimiter}",
+                "nullFormat": "",
+                "compress": "",
+                "datasource": "${fromDataSource}",
+                "envType": 1,
+                "column": [
+                    ${ossStr}
+                ],
+                "skipHeader": "false",
+                "encoding": "${fromEncoding}",
+                "fieldDelimiter": "${fromFieldDelimiter}",
+                "lineDelimiter": "${fromLineDelimiter}",
+                "fileFormat": "${fromFileFormat}",
+                "object": [
+                    "${fromTableName}"
+                ]
+            },
+            "name": "Reader",
+            "category": "reader"
+        },
+        {
+            "stepType": "${toStepType}",
+            "parameter": {
+                "partition": "${toPartition}",
+                "truncate": ${toTruncate},
+                "datasource": "${toDataSource}",
+                "envType": 1,
+                "column": [
+                    ${colStr}
+                ],
+                "emptyAsNull": false,
+                "table": "${toTableName}"
+            },
+            "name": "Writer",
+            "category": "writer"
+        }
+    ],
+    "setting": {
+        "executeMode": null,
+        "errorLimit": {
+            "record": "${record}"
+        },
+        "speed": {
+            "concurrent": ${concurrent},
+            "throttle": ${throttle}
+        }
+    },
+    "order": {
+        "hops": [
+            {
+                "from": "Reader",
+                "to": "Writer"
+            }
+        ]
+    }
+}
